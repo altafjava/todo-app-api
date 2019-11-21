@@ -1,4 +1,4 @@
-package com.altafjava.taa.dto;
+package com.altafjava.helloworld.dto;
 
 public class HelloWorldBean {
 

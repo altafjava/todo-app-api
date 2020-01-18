@@ -10,11 +10,11 @@ import com.altafjava.todo.dto.Todo;
 public class TodoService {
 
 	private static List<Todo> todos = new ArrayList<>();
-	static long id = 0;
+	static long idCounter = 0;
 	static {
-		todos.add(new Todo(++id, "Sam Altaf", "Learning Angular", new Date(), true));
-		todos.add(new Todo(++id, "Ahmad Shah", "Playing Cricket", new Date(), false));
-		todos.add(new Todo(++id, "Ankit Singh", "Teaching Java to their students", new Date(), false));
+		todos.add(new Todo(++idCounter, "Sam Altaf", "Learning Angular", new Date(), true));
+		todos.add(new Todo(++idCounter, "Ahmad Shah", "Playing Cricket", new Date(), false));
+		todos.add(new Todo(++idCounter, "Ankit Singh", "Teaching Java to their students", new Date(), false));
 	}
 
 	public List<Todo> findAll() {
@@ -31,7 +31,19 @@ public class TodoService {
 			return null;
 	}
 
-	private Todo findById(long id) {
+	public Todo findById(long id) {
 		return todos.stream().filter(todo -> todo.getId() == id).findAny().orElse(null);
+	}
+
+	public Todo save(Todo todo) {
+		long id = todo.getId();
+		if (id == 0) {
+			todo.setId(++idCounter);
+			todos.add(todo);
+		} else {
+			deleteById(id);
+			todos.add(todo);
+		}
+		return todo;
 	}
 }
